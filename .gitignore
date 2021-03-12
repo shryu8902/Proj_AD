@@ -1,0 +1,10 @@
+#Ignored folders
+Figs/
+Data/
+Model/
+History/
+wandb/
+lightning_logs/
+MNIST/
+__pycache__/
+.vscode/
