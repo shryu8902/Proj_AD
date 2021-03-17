@@ -54,7 +54,7 @@ for file_root in tqdm.tqdm(file_list_gyro):
     df_temp_acc = pd.read_csv(_BASE_ROOT_ + file_name_acc, header=None, sep=' ', names=['ax','ay','az'])
     df_temp = pd.concat([df_temp_gyro,df_temp_acc],axis=1)
     # Fill NAN value   
-    df_temp.fillna(method='pad',axis='columns',inplace=True)
+    df_temp.fillna(method='pad',axis='index',inplace=True)
     # df_temp = df_temp.interpolate(axis=1,inplace=True)
 
     # Train scaler for **input**
