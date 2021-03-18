@@ -22,15 +22,17 @@ def ensure_dir(file_path):
 #%% 
 # Save each trajectory in to _ROOT_/_TRAJECTORY_CLASS_/*.csv or pickle or etc
 # Define root
-TARGET_DATA = 'HAR'
+TARGET_DATA = 'MillToolWear'
 _ROOT_ = '/RAID8T/Datasets/AD/Processed/{}/'.format(TARGET_DATA)
 
 #%%
 # Dataset root : /RAID8T/Datasets/AD/HAR
-_BASE_ROOT_ =  '/RAID8T/Datasets/AD/HAR/RawData/'
+_BASE_ROOT_ =  '/RAID8T/Datasets/AD/{}/'.format(TARGET_DATA)
+file_list = sorted(glob.glob(_BASE_ROOT_+'experiment*'))
+test=pd.read_csv(file_list[0])
 file_list_gyro = sorted(glob.glob(_BASE_ROOT_+'gyro*'))
 file_list_acc = sorted(glob.glob(_BASE_ROOT_+'acc*'))
-df_label = pd.read_csv(_BASE_ROOT_+'labels.txt',header=None, sep=' ',names=['eid','uid','label','start','end'])
+df_label = pd.read_csv(_BASE_ROOT_+'train.csv')
 
 #%%
 # trajectory class is uid
@@ -54,7 +56,7 @@ for file_root in tqdm.tqdm(file_list_gyro):
     df_temp_acc = pd.read_csv(_BASE_ROOT_ + file_name_acc, header=None, sep=' ', names=['ax','ay','az'])
     df_temp = pd.concat([df_temp_gyro,df_temp_acc],axis=1)
     # Fill NAN value   
-    df_temp.fillna(method='pad',axis='index',inplace=True)
+    df_temp.fillna(method='pad',axis='columns',inplace=True)
     # df_temp = df_temp.interpolate(axis=1,inplace=True)
 
     # Train scaler for **input**

@@ -22,12 +22,24 @@ def ensure_dir(file_path):
 #%% 
 # Save each trajectory in to _ROOT_/_TRAJECTORY_CLASS_/*.csv or pickle or etc
 # Define root
-TARGET_DATA = 'HAR'
+TARGET_DATA = '3W'
 _ROOT_ = '/RAID8T/Datasets/AD/Processed/{}/'.format(TARGET_DATA)
 
 #%%
 # Dataset root : /RAID8T/Datasets/AD/HAR
-_BASE_ROOT_ =  '/RAID8T/Datasets/AD/HAR/RawData/'
+_BASE_ROOT_ =  '/RAID8T/Datasets/AD/{}/*/'.format(TARGET_DATA)
+file_list = sorted(glob.glob(_BASE_ROOT_+'WELL*'))
+
+
+natest2=[]
+for i in tqdm.tqdm(file_list):
+    test=pd.read_csv(i)
+    test.fillna(method='pad',axis='index',inplace=True)
+    natest2.append(test.isnull().sum(axis=0))
+natest2 = pd.DataFrame(natest2)
+test
+
+test=pd.read_csv(file_list[0])
 file_list_gyro = sorted(glob.glob(_BASE_ROOT_+'gyro*'))
 file_list_acc = sorted(glob.glob(_BASE_ROOT_+'acc*'))
 df_label = pd.read_csv(_BASE_ROOT_+'labels.txt',header=None, sep=' ',names=['eid','uid','label','start','end'])
