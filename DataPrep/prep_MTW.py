@@ -29,7 +29,21 @@ _ROOT_ = '/RAID8T/Datasets/AD/Processed/{}/'.format(TARGET_DATA)
 # Dataset root : /RAID8T/Datasets/AD/HAR
 _BASE_ROOT_ =  '/RAID8T/Datasets/AD/{}/'.format(TARGET_DATA)
 file_list = sorted(glob.glob(_BASE_ROOT_+'experiment*'))
-test=pd.read_csv(file_list[0])
+TRJ_info = pd.read_csv(_BASE_ROOT_+'train.csv')
+pds =[]
+for i in range(len(TRJ_info)):
+    temp = pd.read_csv(file_list[i])
+    mf, pvi = TRJ_info.iloc[i][['machining_finalized','passed_visual_inspection']]
+    if pvi =='no':
+        temp['pvi']=1
+    else :
+        temp['pvi']=0
+    if mf =='no':
+        temp['mf']=1
+    else:
+        temp['mf']=0
+    pds.append(temp)
+pds_pd = pd.concat(pds)
 file_list_gyro = sorted(glob.glob(_BASE_ROOT_+'gyro*'))
 file_list_acc = sorted(glob.glob(_BASE_ROOT_+'acc*'))
 df_label = pd.read_csv(_BASE_ROOT_+'train.csv')
