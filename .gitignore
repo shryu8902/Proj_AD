@@ -2,6 +2,7 @@
 Figs/
 Data/
 Model/
+Proto/
 History/
 wandb/
 lightning_logs/
