@@ -6,7 +6,7 @@ import os, glob, json, pickle
 import pandas as pd
 import numpy as np
 
-class TimeseriesAnomalyDataset(torch.utils.data.Dataset): 
+class TimeseriesAnomalyDataset2(torch.utils.data.Dataset): 
     def __init__(self, TARGET_DATA, samprate, window, stride, json_root, scaler='MMSC', timestamp = False, fileformat='pkl', transient=True, ABNORM_TRJ_CLASS=[], ABNORM_STEP_CLASS=[]):
         self.TARGET_DATA=TARGET_DATA
         with open(json_root,'rb') as f:
